@@ -87,7 +87,7 @@ footer button:disabled:hover{background:#fff;border-color:var(--trame)}
     padding:60pt;text-align:center;color:#5E1349}
 }
 @media (max-width:900px){#notes{flex:0 0 250px}header .titre{display:none}}
-</style>
+#liens{position:absolute;inset:0;z-index:20}#liens a{position:absolute;display:block;border-radius:6px;cursor:pointer;outline:2px solid transparent;transition:outline-color .15s,background .15s}#liens a:hover{outline-color:#c8a96b;background:rgba(200,169,107,.18)}#nliens{margin-top:10px;padding-top:8px;border-top:1px solid #e8dce5}#nliens a{display:block;color:#8C1E70;font-weight:700;word-break:break-all;margin:4px 0}</style>
 </head>
 <body oncontextmenu="return false" class="">
 
@@ -202,6 +202,13 @@ document.addEventListener("dragstart", e => e.preventDefault());
 document.addEventListener("copy", e => e.preventDefault());
 document.addEventListener("cut", e => e.preventDefault());
 aller(0);
+const LIENS=[[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []];
+(function(){const cadre=document.getElementById('cadre');const lay=document.createElement('div');lay.id='liens';cadre.appendChild(lay);
+const nb=document.createElement('div');nb.id='nliens';document.querySelector('#notes .corps').appendChild(nb);
+const _aller=aller;aller=function(i){_aller(i);const L=LIENS[idx]||[];lay.innerHTML='';nb.innerHTML='';
+ L.forEach(l=>{const a=document.createElement('a');a.href=l.u;a.target='_blank';a.rel='noopener';a.title=l.u;Object.assign(a.style,{left:l.x+'%',top:l.y+'%',width:l.w+'%',height:l.h+'%'});lay.appendChild(a);});
+ if(L.length){nb.innerHTML='<b>Liens de la diapositive</b>'+L.map(l=>'<a href="'+l.u+'" target="_blank" rel="noopener">'+l.u.replace('https://','')+'</a>').join('');}};
+aller(idx);})();
 </script>
 </body>
 </html>
